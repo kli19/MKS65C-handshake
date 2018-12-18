@@ -1,4 +1,8 @@
 #include "pipe_networking.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 
 /*=========================
@@ -11,6 +15,11 @@
   returns the file descriptor for the upstream pipe.
   =========================*/
 int server_handshake(int *to_client) {
+  int fd;
+  mkfifo("luigi", 0644);
+  //printf(“pipe created\n”);
+  fd = open ("luigi", O_RDONLY);
+  //printf("pipe opened: %d\n", fd);
   return 0;
 }
 
