@@ -24,7 +24,7 @@ int server_handshake(int *to_client) {
 
   printf("Server reading WKP\n");
   read(from_client, pid, sizeof(pid));
-  printf("Server read WKP\n");
+  printf("Server read WKP: %s\n", pid);
 
   printf("Server opening private pipe\n");
   *to_client = open(pid, O_WRONLY);
@@ -36,11 +36,11 @@ int server_handshake(int *to_client) {
 
   printf("Server writing to private pipe\n");
   write(*to_client, ACK, sizeof(ACK));
-  printf("Server wrote to private pipe\n");
+  printf("Server wrote to private pipe: %s\n", ACK);
 
   printf("Server reading from WKP\n");
   read(from_client, msg, sizeof(msg));
-  printf("Server read from WKP\n");
+  printf("Server read from WKP: %s\n", msg);
   
   return from_client;
 }
@@ -66,12 +66,12 @@ int client_handshake(int *to_server) {
   printf("Client created private pipe\n");
 
   printf("Client opening private pipe\n");
-  *to_server = open(pid, O_WRONLY);
+  *to_server = open("wkp", O_WRONLY);
   printf("Client opened private pipe\n");
 
   printf("Client writing to WKP\n");
   write(*to_server, pid, sizeof(pid));
-  printf("Client wrote to WKP\n");
+  printf("Client wrote to WKP: %s\n", pid);
 
   printf("Client opening private pipe\n");
   int from_server = open(pid, O_RDONLY);
@@ -79,7 +79,7 @@ int client_handshake(int *to_server) {
 
   printf("Client reading private pipe\n");
   read(from_server, msg, sizeof(msg));
-  printf("Client read private pipe\n");
+  printf("Client read private pipe: %s\n", msg);
 
   printf("Client removing private pipe\n");
   remove(pid);
@@ -87,7 +87,7 @@ int client_handshake(int *to_server) {
 
   printf("Client writing to WKP\n");
   write(*to_server, ACK, sizeof(ACK));
-  printf("Client wrote to WKP\n");
+  printf("Client wrote to WKP: %s\n", ACK);
   
   return from_server;
 }
