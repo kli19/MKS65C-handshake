@@ -42,16 +42,6 @@ int server_handshake(int *to_client) {
   read(from_client, msg, sizeof(msg));
   printf("The server read \"%s\"\n", msg);
   printf("Handshake complete!\n=================\n");
-
-  while(1){
-    read(from_client, msg, sizeof(msg));
-    printf("The client says: %s\n", msg);
-    char data[BUFFER_SIZE];
-    int len = strlen(msg);
-    //sprintf(data, "Length: %d\n", len);
-    printf("%s", data);
-    write(*to_client, msg, sizeof(msg));
-  }
   
   return from_client;
 }
@@ -101,16 +91,6 @@ int client_handshake(int *to_server) {
   printf("Client wrote \"%s\"\n", ACK);
 
   printf("Handshake complete!\n==================\n");
-
-  while(1){
-    printf("Send something to the server:\n");
-    char * line = malloc(100 * sizeof(char));
-    fgets(line, 100, stdin);
-    write(*to_server, line, sizeof(line));
-    read(from_server, msg, sizeof(msg));
-    printf("Server says: %s\n", msg);
-    free(line);
-  }
   
   return from_server;
 }
