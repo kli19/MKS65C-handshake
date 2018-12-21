@@ -1,7 +1,17 @@
 #include "pipe_networking.h"
 
-int main() {
+static void sighandler(int signo){
+  
+  if(signo == SIGINT){
+    //printf("removing WKP\n");
+    remove("wkp");
+    exit(0);
+  }
+}
 
+int main() {
+  signal(SIGINT, sighandler);
+  
   int to_client;
   int from_client;
 
