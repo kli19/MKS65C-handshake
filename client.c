@@ -13,10 +13,10 @@ int main() {
 
   while(1){
 
-    printf("Send something to the server:\n");
+    printf("Send data to the server: ");
     fgets(line, 100, stdin);
     write(to_server, line, sizeof(line));
     read(from_server, msg, sizeof(msg));
-    printf("Server says: %s\n", msg);
+    printf("Server processed data: %s\n", msg);
   }
 }
